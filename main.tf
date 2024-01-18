@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.87.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.0"
+    }
   }
 }
 
@@ -43,4 +47,15 @@ output "rg_training_id" {
 
 output "rg_nw_id" {
   value = data.azurerm_resource_group.nw.id
+}
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "_"
+}
+
+output "password" {
+  value     = random_password.password.result
+  sensitive = true
 }
