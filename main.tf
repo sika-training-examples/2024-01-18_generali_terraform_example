@@ -1,4 +1,11 @@
 terraform {
+  backend "azurerm" {
+    container_name       = "terraform-state"
+    resource_group_name  = "terraform-state"
+    storage_account_name = "terraformstatgenerali"
+    key                  = "ondrejsika.tfstate"
+    # -backend-config="resource_group_name=storage-account-example" -backend-config="storage_account_name=example8637959853" -backend-config="container_name=example" -backend-config="key=terraform.tfstate"
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
