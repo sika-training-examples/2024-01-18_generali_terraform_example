@@ -1,0 +1,13 @@
+module "azure-k8s" {
+  source  = "ondrejsika/azure-k8s/module"
+  version = "0.2.1"
+
+  azurerm_resource_group = azurerm_resource_group.training
+  name                   = var.name
+  kubernetes_version     = "1.26"
+}
+
+output "kubeconfig" {
+  value     = module.azure-k8s.kubeconfig
+  sensitive = true
+}
