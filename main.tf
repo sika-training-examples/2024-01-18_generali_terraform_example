@@ -101,3 +101,33 @@ module "vm2" {
 output "vm2_ip" {
   value = module.vm2.private_ip_address
 }
+
+module "vm_with_ip" {
+  source = "./modules/vm_with_ip"
+
+  for_each = {
+    foo = {
+      public_ip = true
+    }
+    bar = {
+      public_ip = false
+    }
+  }
+
+  location            = azurerm_resource_group.training.location
+  resource_group_name = azurerm_resource_group.training.name
+  subnet_id           = azurerm_subnet.training[0].id
+  name                = "${var.name}-${each.key}"
+  ssh_key             = local.admin_ssh_key
+  user_data           = local.user_data
+  public_ip           = each.value.public_ip
+}
+
+output "ips" {
+  value = {
+    for name, vm in module.vm_with_ip : name => {
+      private = vm.private_ip_address
+      public  = vm.public_ip_address
+    }
+  }
+}
