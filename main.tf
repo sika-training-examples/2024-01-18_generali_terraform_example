@@ -27,4 +27,20 @@ variable "name" {
 resource "azurerm_resource_group" "training" {
   name     = "training-${var.name}"
   location = "westeurope"
+
+  tags = {
+    managed_by = "terraform"
+  }
+}
+
+data "azurerm_resource_group" "nw" {
+  name = "NetworkWatcherRG"
+}
+
+output "rg_training_id" {
+  value = azurerm_resource_group.training.id
+}
+
+output "rg_nw_id" {
+  value = data.azurerm_resource_group.nw.id
 }
