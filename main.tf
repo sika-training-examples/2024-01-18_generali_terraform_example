@@ -78,13 +78,12 @@ EOF
 module "vm" {
   source = "./modules/vm"
 
-  location             = azurerm_resource_group.training.location
-  resource_group_name  = azurerm_resource_group.training.name
-  subnet_id            = azurerm_subnet.training[0].id
-  name                 = var.name
-  ssh_key              = local.admin_ssh_key
-  user_data            = local.user_data
-  public_ip_address_id = azurerm_public_ip.training.id
+  location            = azurerm_resource_group.training.location
+  resource_group_name = azurerm_resource_group.training.name
+  subnet_id           = azurerm_subnet.training[0].id
+  name                = "${var.name}-1"
+  ssh_key             = local.admin_ssh_key
+  user_data           = local.user_data
 }
 
 module "vm2" {

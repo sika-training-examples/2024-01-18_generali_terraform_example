@@ -1,0 +1,14 @@
+resource "azurerm_public_ip" "ip2" {
+  name                = "${var.name}-ip2"
+  resource_group_name = azurerm_resource_group.training.name
+  location            = azurerm_resource_group.training.location
+  allocation_method   = "Static"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+output "ip2" {
+  value = azurerm_public_ip.ip2.ip_address
+}
