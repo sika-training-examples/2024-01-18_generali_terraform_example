@@ -1,11 +1,20 @@
 terraform {
-  backend "azurerm" {
-    container_name       = "terraform-state"
-    resource_group_name  = "terraform-state"
-    storage_account_name = "terraformstatgenerali"
-    key                  = "ondrejsika.tfstate"
-    # -backend-config="resource_group_name=storage-account-example" -backend-config="storage_account_name=example8637959853" -backend-config="container_name=example" -backend-config="key=terraform.tfstate"
+  # backend "azurerm" {
+  #   container_name       = "terraform-state"
+  #   resource_group_name  = "terraform-state"
+  #   storage_account_name = "terraformstatgenerali"
+  #   key                  = "ondrejsika.tfstate"
+  #   # -backend-config="resource_group_name=storage-account-example" -backend-config="storage_account_name=example8637959853" -backend-config="container_name=example" -backend-config="key=terraform.tfstate"
+  # }
+  backend "http" {
+    address        = "https://gitlab.sikalabs.com/api/v4/projects/546/terraform/state/main"
+    lock_address   = "https://gitlab.sikalabs.com/api/v4/projects/546/terraform/state/main/lock"
+    unlock_address = "https://gitlab.sikalabs.com/api/v4/projects/546/terraform/state/main/lock"
+    lock_method    = "POST"
+    unlock_method  = "DELETE"
+    retry_wait_min = "5"
   }
+  # terraform init -backend-config="username=xxx" -backend-config="password=xxx"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
