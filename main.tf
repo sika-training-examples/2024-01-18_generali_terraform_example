@@ -34,6 +34,8 @@ resource "azurerm_resource_group" "training" {
 
   tags = {
     managed_by = "terraform"
+    aaa        = "bbb"
+    foo        = "bar"
   }
 }
 
